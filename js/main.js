@@ -79,11 +79,8 @@ initMap = () => {
         scrollWheelZoom: false
       });
   L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
-    mapboxToken: '<your MAPBOX API KEY HERE>',
+    mapboxToken: 'pk.eyJ1IjoiYnJhZHl0Zm9yZCIsImEiOiJjamlydTVnZngwMXlhM3dxbTE2NzNhbWNjIn0.vP54TruwPoPWQLYZdPKcug',
     maxZoom: 18,
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-      '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-      'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     id: 'mapbox.streets'
   }).addTo(newMap);
 
@@ -158,33 +155,36 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
  * Create restaurant HTML.
  */
 createRestaurantHTML = (restaurant) => {
-  const li = document.createElement('article');
+  const art = document.createElement('article');
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
   image.alt = DBHelper.imageAltforRestaurant(restaurant);
-  li.append(image);
+  art.append(image);
 
+  const header = document.createElement('header');
   const name = document.createElement('h2');
   name.innerHTML = restaurant.name;
-  li.append(name);
+  header.appendChild(name);
+  art.append(header);
 
   const neighborhood = document.createElement('p');
   neighborhood.innerHTML = restaurant.neighborhood;
-  li.append(neighborhood);
+  art.append(neighborhood);
 
   const address = document.createElement('p');
   address.innerHTML = restaurant.address;
-  li.append(address);
+  art.append(address);
 
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
   more.setAttribute('role', 'button');
-  li.append(more)
 
-  return li
+  art.append(more)
+
+  return art
 }
 
 /**
@@ -194,23 +194,22 @@ addMarkersToMap = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     // Add marker to the map
     const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.newMap);
+    // marker.setAttribute('role', 'link');
+    // marker.setAttribute('aria-describedby','');
     marker.on("click", onClick);
     function onClick() {
       window.location.href = marker.options.url;
     }
+    marker.on("keydown", (e) => {
+      alert();
+      event.preventDefault();
+      if (e.keyCode === 13 ) onClick();
+    })
     self.markers.push(marker);
   });
-
-} 
-/* addMarkersToMap = (restaurants = self.restaurants) => {
-  restaurants.forEach(restaurant => {
-    // Add marker to the map
-    const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.map);
-    google.maps.event.addListener(marker, 'click', () => {
-      window.location.href = marker.url
-    });
-    self.markers.push(marker);
-  });
+  document.querySelectorAll('img.leaflet-marker-icon').forEach((elem) => {
+    elem.setAttribute('role','link');
+  })
 }
 
 /**
@@ -221,10 +220,10 @@ registerServiceWorker = () => {
     navigator.serviceWorker.register('sw.js', )
     .then(function(reg) {
       // registration worked
-      console.log('Registration succeeded. Scope is ' + reg.scope);
+      // console.log('Registration succeeded. Scope is ' + reg.scope);
     }).catch(function(error) {
       // registration failed
-      console.log('Registration failed with ' + error);
+      // console.log('Registration failed with ' + error);
     });
   }
 }

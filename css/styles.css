@@ -180,8 +180,11 @@ nav li a:hover {
   min-height: 200px;
   min-width: 100%;
 }
-#restaurants-list article h2 {
+#restaurants-list article header {
   order: -1;
+  background-color: #fff;
+}
+#restaurants-list article header h2 {
   color: #0076AD;
   letter-spacing: 0;
   line-height: 1.3;
