@@ -306,6 +306,7 @@ nav li a:hover {
   }
   #restaurant-img-container {
     order: 3;
+    text-align: center;
   }
   #restaurant-hours {
     order: 4;

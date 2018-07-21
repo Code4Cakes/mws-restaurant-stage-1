@@ -27,19 +27,19 @@
   <!-- Beginning main -->
   <main id="maincontent">
     <!-- Beginning map -->
-    <section id="map-container" aria-hidden="true">
+    <section id="map-container" aria-hidden="true" tabindex=-1>
       <div id="map"></div>
     </section>
     <!-- End map -->
     <!-- Beginning restaurant -->
     <section id="restaurant-container">
-      <h1 id="restaurant-name"></h1>
+      <h1 id="restaurant-name" aria-label="Restaurant name" tabindex=0></h1>
       <div id="restaurant-img-container">
           <img id="restaurant-img">
       </div>
-      <p id="restaurant-cuisine"></p>
-      <p id="restaurant-address"></p>
-      <table id="restaurant-hours"></table>
+      <p id="restaurant-cuisine" aria-label="cuisine type" tabindex=0></p>
+      <p id="restaurant-address" aria-label="restaurant address" tabindex=0></p>
+      <table id="restaurant-hours" aria-label="restaurant hours" tabindex=0></table>
     </section>
     <!-- end restaurant -->
     <!-- Beginning reviews -->
